@@ -6,7 +6,7 @@ on:
     branches: ['main']
 
 env:
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: lexitar-gadgets-app
   DOCKER_USERNAME: omotomiwa
   PROJECT_ID: lexitar-gadgets-ecommerce-backend
   SERVICE_ID: lexitar-gadget-app
