@@ -10,7 +10,7 @@ env:
   DOCKER_USERNAME: omotomiwa
   PROJECT_ID: lexitar-gadgets-ecommerce-backend
   SERVICE_ID: lexitar-gadget-app
-  CREDENTIALS_ID: github
+  CREDENTIALS_ID: dockerhub
 
 jobs:
   build-and-deploy:
