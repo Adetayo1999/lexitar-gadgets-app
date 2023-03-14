@@ -12,7 +12,7 @@ export class BadRequestError extends BaseError {
 
   serializerError() {
     return {
-      error: RESPONSE_STATUS.ERROR,
+      status: RESPONSE_STATUS.ERROR,
       data: [{ reason: this.message }],
     };
   }
