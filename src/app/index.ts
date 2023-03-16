@@ -1,8 +1,7 @@
 import express from 'express';
-import { errorHandler } from '../common/middlewares/error-handler';
-import { NotFoundError } from '../common/errors';
-import { requestMiddleWare } from '../common/middlewares/request-middleware';
-import getRoutes from '../routes';
+import { NotFoundError } from '@/common/errors';
+import { requestMiddleWare, errorHandler } from '@/common/middlewares';
+import getRoutes from '@/routes/index';
 
 export const getApp = () => {
   const app = express();

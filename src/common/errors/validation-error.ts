@@ -3,7 +3,7 @@ import { BaseError } from './base-error';
 import { HTTP_CODES } from '../constants/http-codes';
 import { RESPONSE_STATUS } from '../constants/response-status';
 
-class RequestValidationError extends BaseError {
+export class RequestValidationError extends BaseError {
   _statusCode = HTTP_CODES.BAD_REQUEST;
 
   constructor(private errors: ValidationError) {
@@ -22,5 +22,3 @@ class RequestValidationError extends BaseError {
     };
   }
 }
-
-export default RequestValidationError;

@@ -9,3 +9,8 @@ export type RegisterType = {
   firstName: string;
   lastName: string;
 };
+
+export type AccessTokenJWTPayload = {
+  email: string;
+  id: number;
+};

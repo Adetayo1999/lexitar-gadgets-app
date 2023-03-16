@@ -1,8 +1,7 @@
-import 'module-alias/register';
 import 'dotenv/config';
-import { getApp } from './app/index';
-import { ENV } from './common/config/env';
-import connectDB from './db/index';
+import { getApp } from '@/app/index';
+import { ENV } from '@/common/config/env';
+import connectDB from '@/db/index';
 
 const startUp = async () => {
   if (Object.keys(ENV).some((env) => env === undefined)) {
