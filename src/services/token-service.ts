@@ -1,24 +1,36 @@
-import RefreshTokenModel from '@/db/models/refresh-token';
+import TokenModel from '@/db/models/token';
 
-class AuthTokenService {
-  private Refreshtoken = RefreshTokenModel;
+class TokenService {
+  private Token = TokenModel;
 
-  async create(token: string, userId: number) {
+  async create(
+    token: string,
+    userId: number,
+    ip_address: string,
+    scope: 'refresh_token' | 'email_verification' | 'password_reset'
+  ) {
     const timeNow = new Date().getTime();
     const eightDaysFromNow = timeNow + 8 * 24 * 60 * 60 * 1000;
     const expiry_date = new Date(eightDaysFromNow);
-    const refreshToken = await this.Refreshtoken.create({
+    const newToken = await this.Token.create({
       status: 'valid',
       token,
       expiry_date,
+      ip_address,
+      scope,
     });
 
-    refreshToken.userId = userId;
+    newToken.userId = userId;
 
-    await refreshToken.save();
+    await newToken.save();
 
-    return refreshToken;
+    return newToken;
+  }
+
+  async tokenVerification(token: string) {
+    const dbToken = await this.Token.findOne({ where: { token } });
+    return dbToken;
   }
 }
 
-export default AuthTokenService;
+export default TokenService;

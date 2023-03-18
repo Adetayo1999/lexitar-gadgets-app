@@ -29,3 +29,16 @@ export const verifyAccessToken = (token: string) => {
 export const verifyRefreshToken = (token: string) => {
   return verifyJWTToken(token, ENV.REFRESH_TOKEN_SECRET!);
 };
+
+export const createMailToken = (data: JWTPayload) => {
+  const token = createJWTToken(
+    ENV.MAIL_TOKEN_SECRET!,
+    (30 * 60 * 1000).toString(),
+    data
+  );
+  return token;
+};
+
+export const verifyMailToken = (token: string) => {
+  return verifyJWTToken(token, ENV.MAIL_TOKEN_SECRET!);
+};

@@ -1,6 +1,6 @@
 import { UserAttributes, UserCreationAttributes } from '../../common/types';
 import { Table, Model, Column, HasMany, DataType } from 'sequelize-typescript';
-import RefreshToken from './refresh-token';
+import Token from './token';
 
 @Table({ tableName: 'users' })
 export default class User extends Model<
@@ -34,6 +34,6 @@ export default class User extends Model<
   })
   declare channel: 'local' | 'google' | 'facebook';
 
-  @HasMany(() => RefreshToken)
-  declare refreshToken: RefreshToken[];
+  @HasMany(() => Token)
+  declare token: Token[];
 }

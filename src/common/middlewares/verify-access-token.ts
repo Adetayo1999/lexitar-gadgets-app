@@ -12,8 +12,6 @@ export const verifyAccessTokenMiddleware = async (
   try {
     const accessToken = request.headers['x-access-token'];
 
-    console.log(accessToken, 'here');
-
     if (!accessToken || typeof accessToken !== 'string')
       throw new UnAuthorizedRequestError(
         'Unauthorised. Please login with your details.'

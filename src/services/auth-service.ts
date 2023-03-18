@@ -24,6 +24,7 @@ class AuthService {
       ...user,
       password: hashedPassword,
     });
+
     return newUser;
   }
 
@@ -41,6 +42,15 @@ class AuthService {
   async getUser(userId: number) {
     const user = await this.User.findByPk(userId);
     if (!user) throw new BadRequestError('Suspecious Activities Detected');
+    return user;
+  }
+
+  async verifyUser(userId: number) {
+    const user = await this.User.findByPk(userId);
+    if (user) {
+      user.is_verified = true;
+      await user.save();
+    }
     return user;
   }
 }
