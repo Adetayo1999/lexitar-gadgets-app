@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import AuthService from '@/services/auth-service';
+import AuthTokenService from '@/services/token-service';
 import { loginValidationSchema } from '@/common/validations/auth';
 import { RequestValidationError } from '@/common/errors';
 import { sendResponse } from '@/common/helpers/send-response';
@@ -11,6 +12,7 @@ import {
 } from '@/common/helpers/jwt-tokens';
 
 const Auth = new AuthService();
+const AuthToken = new AuthTokenService();
 
 export const localLoginController = async (
   request: Request,
@@ -26,7 +28,7 @@ export const localLoginController = async (
       email: user.email,
       id: user.id,
     });
-
+    await AuthToken.create(refresh_token, user.id);
     const data = {
       user,
       refresh_token,

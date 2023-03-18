@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 import { ENV } from '../common/config/env';
 
 export const sequelize = new Sequelize(
@@ -8,6 +8,7 @@ export const sequelize = new Sequelize(
   {
     host: ENV.DB_HOST!,
     dialect: 'postgres',
+    models: [__dirname + '/models'],
   }
 );
 

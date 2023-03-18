@@ -1,8 +1,12 @@
-import { UnAuthorizedRequestError, ConflictError } from '../common/errors';
-import { UserAttributes } from '../common/types/model-types.ts/user';
-import UserModel from '../models/user';
+import {
+  UnAuthorizedRequestError,
+  ConflictError,
+  BadRequestError,
+} from '@/common/errors';
+import { UserAttributes } from '@/common/types/model-types/user';
+import UserModel from '@/db/models/user';
 import { compare, hash } from 'bcrypt';
-import { LoginType } from '../common/types/auth';
+import { LoginType } from '@/common/types/auth';
 
 class AuthService {
   private User = UserModel;
@@ -32,6 +36,12 @@ class AuthService {
       throw new UnAuthorizedRequestError('Invalid Login Credentials');
 
     return dbUser;
+  }
+
+  async getUser(userId: number) {
+    const user = await this.User.findByPk(userId);
+    if (!user) throw new BadRequestError('Suspecious Activities Detected');
+    return user;
   }
 }
 
