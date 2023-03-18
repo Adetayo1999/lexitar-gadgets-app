@@ -1,27 +1,18 @@
 import express from 'express';
-import morgan from 'morgan';
-import cors from 'cors';
-import helmet from 'helmet';
-import { errorHandler } from '../common/middlewares/error-handler';
-import { NotFoundError } from '../common/errors';
+import { NotFoundError } from '@/common/errors';
+import { requestMiddleWare, errorHandler } from '@/common/middlewares';
+import getRoutes from '@/routes/index';
 
 export const getApp = () => {
   const app = express();
 
   // middlewares
-  app.use(morgan('dev'));
-  app.use(
-    cors({
-      credentials: true,
-      origin: ['http://localhost:3000', '127.0.0.1:3000'],
-    })
-  );
-  app.use(helmet());
-  app.use(express.urlencoded({ extended: true }));
-  app.use(express.json());
+  requestMiddleWare(app);
+  getRoutes(app);
 
   app.get('/', (_, response) => {
     response.send({
+      status: 'success',
       message: 'Hi there, welcome to Lexitar Gadgets',
     });
   });

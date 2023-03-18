@@ -1,10 +1,10 @@
 import 'dotenv/config';
-import { getApp } from './app';
-import { ENV } from './common/config/env';
-import connectDB from './db';
+import { getApp } from '@/app/index';
+import { ENV } from '@/common/config/env';
+import connectDB from '@/db/index';
 
 const startUp = async () => {
-  if (Object.keys(ENV).some((env) => env === undefined)) {
+  if (Object.values(ENV).some((env) => env === undefined)) {
     throw new Error('ENVIRONMENT ERROR');
   }
 
