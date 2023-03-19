@@ -10,4 +10,5 @@ export const ENV = Object.freeze({
   POSTMARK_TOKEN: process.env.POSTMARK_TOKEN,
   SERVER_URL: process.env.SERVER_URL,
   CLIENT_URL: process.env.CLIENT_URL,
+  SUPPORT_EMAIL: process.env.SUPPORT_EMAIL,
 });
