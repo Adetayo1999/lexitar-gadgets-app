@@ -1,5 +1,7 @@
 import { ENV } from '@/common/config/env';
-import { verifyMailToken } from '@/common/helpers';
+import { HTTP_CODES, RESPONSE_MESSAGES } from '@/common/constants';
+import { BadRequestError } from '@/common/errors';
+import { sendResponse, verifyMailToken } from '@/common/helpers';
 import { JWTPayload } from '@/common/types';
 import AuthService from '@/services/auth-service';
 import TokenService from '@/services/token-service';
@@ -14,24 +16,28 @@ export const emailVerificationController = async (
   next: NextFunction
 ) => {
   try {
-    const token = request.query['token'];
+    const { token } = request.body;
+
     if (!token || typeof token !== 'string')
-      return response.redirect(ENV.CLIENT_URL! + '/verify?status=error');
+      throw new BadRequestError('Token Required For Verification');
 
     const dbToken = await Token.tokenVerification(token);
 
-    if (!dbToken)
-      return response.redirect(ENV.CLIENT_URL! + '/verify?status=error');
+    if (!dbToken) throw new BadRequestError('Invalid or expired token');
 
     const payload = verifyMailToken(dbToken.token) as JWTPayload;
 
     const user = await Auth.verifyUser(payload.id);
 
-    if (!user)
-      return response.redirect(ENV.CLIENT_URL! + '/verify?status=error');
+    if (!user) throw new BadRequestError('User does not exist in our database');
 
-    return response.redirect(ENV.CLIENT_URL! + '/verify?status=success');
+    sendResponse(
+      response,
+      null,
+      HTTP_CODES.SUCCESS,
+      RESPONSE_MESSAGES.USER_VERIFIED
+    );
   } catch (error) {
-    response.redirect(ENV.CLIENT_URL! + '/verify?status=error');
+    next(error);
   }
 };
